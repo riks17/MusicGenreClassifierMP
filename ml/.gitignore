@@ -1,0 +1,45 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Python Bytecode
+__pycache__/
+*.py[cod]
+
+# Jupyter Notebooks Checkpoints
+.ipynb_checkpoints/
+
+# Model files and large datasets
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+*.onnx
+*.tflite
+*.pt
+*.ckpt
+*.bin
+*.tar.gz
+
+# Logs and outputs
+logs/
+*.log
+
+# Datasets (optional)
+data/raw/
+data/processed/
+datasets/
+*.csv
+*.json
+*.tsv
+
+# Temporary files
+*.tmp
+*.cache
+.DS_Store
+
+# Environment files
+*.env
+.env
+*.wav
