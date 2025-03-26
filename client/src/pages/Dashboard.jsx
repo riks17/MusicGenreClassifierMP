@@ -63,7 +63,6 @@ const Dashboard = () => {
         }
       );
 
-      // Refresh song history after successful upload
       await fetchSongHistory();
       setFile(null);
 

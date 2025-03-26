@@ -32,7 +32,7 @@ def extract_features(audio_data, sr):
 async def classify_genre(file: UploadFile = File(...)):
     """Receives an audio file and predicts its genre."""
     try:
-        # Read file contents
+       
         contents = await file.read()
         audio_file = io.BytesIO(contents)
         print(f"Received file: {file.filename}")

@@ -23,7 +23,7 @@ const Login = () => {
     try {
       await login(formData.email, formData.password);
     } catch (err) {
-      // Error is handled by the AuthContext
+      console.error("Login error:", err);
     }
   };
 
