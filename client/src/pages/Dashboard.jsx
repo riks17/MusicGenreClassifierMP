@@ -48,11 +48,11 @@ const Dashboard = () => {
     setError("");
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("audio", file); // Disclaimer: Audio is the key required by the backend Do not change at any cost took me and krishn about 2 hours to debug.
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/songs",
+        "http://localhost:3001/api/songs", 
         formData,
         {
           withCredentials: true,
