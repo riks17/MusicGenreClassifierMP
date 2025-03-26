@@ -22,6 +22,6 @@ def predict_genre(file_path):
     return genres[genre_index]
 
 # Example usage
-file_path = "./genres_original/blues/blues.00000.wav"  # Change this to your audio file
+file_path = "./test/test2.wav"  # Change this to your audio file
 predicted_genre = predict_genre(file_path)
 print(f"🎵 Predicted Genre: {predicted_genre}")

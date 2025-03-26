@@ -6,6 +6,7 @@ import multer from 'multer';
 const router = express.Router();
 
 const storage = multer.diskStorage({
+  
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
   },
@@ -26,10 +27,12 @@ const upload = multer({
   limits: {
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },
+  
 });
 
-router.route('/')
-  .post(protect, upload.single('audio'), uploadSong)
-  .get(protect, getSongs);
+router
+  .route("/")
+  .post(protect, upload.single("audio"), uploadSong)
+  .get(protect,getSongs);
 
 export default router;

@@ -28,14 +28,14 @@ def extract_features(audio_data, sr):
         raise HTTPException(status_code=400, detail=f"Feature extraction failed: {str(e)}")
 
 # API route for genre classification
-@app.post("/classify/")
+@app.post("/classify")
 async def classify_genre(file: UploadFile = File(...)):
     """Receives an audio file and predicts its genre."""
     try:
         # Read file contents
         contents = await file.read()
         audio_file = io.BytesIO(contents)
-
+        print(f"Received file: {file.filename}")
         # Load audio using soundfile
         audio_data, sr = sf.read(audio_file)
 

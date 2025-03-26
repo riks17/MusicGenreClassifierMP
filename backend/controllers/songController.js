@@ -17,13 +17,17 @@ const uploadSong = asyncHandler(async (req, res) => {
     // Create form data for ML service
     const formData = new FormData();
     formData.append('file', fs.createReadStream(req.file.path));
-
+    console.log('uploadSong called !!! teri mkc');
     // Send file to ML service for classification
-    const mlResponse = await axios.post('http://localhost:8000/predict', formData, {
-      headers: {
-        ...formData.getHeaders(),
-      },
-    });
+    const mlResponse = await axios.post(
+      "http://localhost:8000/classify",
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+        },
+      }
+    );
 
     const genre = mlResponse.data.genre;
 
@@ -33,7 +37,6 @@ const uploadSong = asyncHandler(async (req, res) => {
       filename: req.file.filename,
       genre: genre,
     });
-
     res.status(201).json(song);
   } catch (error) {
     console.error('Error classifying song:', error);
