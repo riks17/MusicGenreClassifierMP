@@ -24,4 +24,4 @@ def predict_genre(file_path):
 # Example usage
 file_path = "./test/test2.wav"  # Change this to your audio file
 predicted_genre = predict_genre(file_path)
-print(f"🎵 Predicted Genre: {predicted_genre}")
+print(f"Predicted Genre: {predicted_genre}")

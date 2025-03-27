@@ -50,4 +50,4 @@ model.fit(X, y)
 with open("genre_classifier.pkl", "wb") as model_file:
     pickle.dump(model, model_file)
 
-print("🎉 Model trained and saved as 'genre_classifier.pkl'")
+print("Model trained and saved as 'genre_classifier.pkl'")
