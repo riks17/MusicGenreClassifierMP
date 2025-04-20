@@ -8,31 +8,37 @@ import {
   AudioWaveform as Waveform,
   Mic2,
 } from "lucide-react";
-
+import Recommendations from "../components/Recommendations";
 const Landing = () => {
   const { user } = useAuth();
 
   const [recommendedGenres, setRecommendedGenres] = useState([]);
   const [loadingRec, setLoadingRec] = useState(false);
   const [songs, setSongs] = useState([]);
+  const [data, setData] = useState([]);
   useEffect(() => {
     const fetchAndRecommend = async () => {
       try {
         setLoadingRec(true);
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
 
-        const response = await axios.get("http://localhost:3001/api/songs", {
+        // const response = await axios.get("http://localhost:3001/api/songs", {
+        //   withCredentials: true,
+        //   headers: { Authorization: `Bearer ${token}` },
+        // });
+
+        // setSongs(response.data);
+
+        // const recRes = await axios.post("http://localhost:8000/recommend/", {
+        //   songs: response.data,
+        // });
+
+        // setRecommendedGenres(recRes.data.recommended_genres || []);
+        const response = await axios.post("http://localhost:3001/api/recommend",{}, {
           withCredentials: true,
-          headers: { Authorization: `Bearer ${token}` },
         });
-
-        setSongs(response.data);
-
-        const recRes = await axios.post("http://localhost:8000/recommend/", {
-          songs: response.data,
-        });
-
-        setRecommendedGenres(recRes.data.recommended_genres || []);
+        console.log("Response:", response.data); // Log the response for debugging
+        setData(response.data);
       } catch (err) {
         console.error("Error:", err);
       } finally {
@@ -133,34 +139,7 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Genre Recommendations */}
-      {user && (
-        <div className="py-16 bg-purple-50">
-          <div className="max-w-3xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
-              Genre Recommendations
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Based on your uploaded songs, we’ve curated genre suggestions
-              just for you.
-            </p>
-            {loadingRec ? (
-              <p className="text-gray-500 animate-pulse">Loading...</p>
-            ) : recommendedGenres.length > 0 ? (
-              <ul className="text-gray-700 space-y-2 text-lg">
-                {recommendedGenres.map((genre, index) => (
-                  <li key={index}>🎵 {genre}</li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">
-                No recommendations yet. Upload songs to get started.
-              </p>
-            )}
-          </div>
-        </div>
-      )}
-
+      <Recommendations recommendations={data} />
       <footer className="bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
           <div className="mt-8 md:mt-0">
