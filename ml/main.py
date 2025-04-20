@@ -3,6 +3,8 @@ import librosa
 import numpy as np
 import pickle
 import io
+from recommend import recommend_genre
+from pydantic import BaseModel
 import soundfile as sf
 
 # Load the pre-trained model
@@ -50,3 +52,35 @@ async def classify_genre(file: UploadFile = File(...)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+
+
+class PreferenceRequest(BaseModel):
+    preferences: list  # e.g., [0.2, 0.4, 0.1, 0.1, 0.2]
+
+
+@app.post("/recommend/")
+def get_recommendations(req: PreferenceRequest):
+    try:
+        # Step 1: Count genres
+        genre_counts = {genre: 0 for genre in GENRES}
+        for song in req.songs:
+            genre = song.genre.lower()
+            if genre in genre_counts:
+                genre_counts[genre] += 1
+
+        total_songs = sum(genre_counts.values())
+        if total_songs == 0:
+            raise HTTPException(status_code=400, detail="No valid genres found in uploaded songs.")
+
+        # Step 2: Generate 5D user vector from genre mapping
+        user_vector = np.zeros(5)
+        for i, genre in enumerate(GENRES):
+            weight = genre_counts[genre] / total_songs
+            user_vector += weight * GENRE_FEATURES[i]
+
+        # Step 3: Recommend genres
+        recommended = recommend_genre(user_vector.tolist())
+        return { "recommended_genres": recommended }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

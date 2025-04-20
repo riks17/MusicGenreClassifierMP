@@ -6,8 +6,8 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import songRoutes from './routes/songRoutes.js';
+import recommendRoutes from './routes/recommend.js'; 
 
-dotenv.config();
 
 connectDB();
 
@@ -24,7 +24,7 @@ app.use(cors({
 app.use('/api/users', userRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/api/songs', songRoutes);
-
+app.use('/api/recommend', recommendRoutes); // Ensure this route is defined
 app.use(notFound);
 app.use(errorHandler);
 
