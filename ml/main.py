@@ -3,7 +3,7 @@ import librosa
 import numpy as np
 import pickle
 import io
-from recommend import recommend_genre
+from recommend import GENRE_FEATURES, recommend_genre
 from pydantic import BaseModel
 import soundfile as sf
 

@@ -6,8 +6,8 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import songRoutes from './routes/songRoutes.js';
-import recommendRoutes from './routes/recommend.js'; 
-
+import recommendRoutes from './routes/recommend.js'; // Ensure this route is defined
+dotenv.config();
 
 connectDB();
 

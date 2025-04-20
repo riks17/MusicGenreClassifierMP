@@ -1,21 +1,27 @@
 import axios from "axios";
-import Song from "../models/songModel.js"; // Assuming you have a Song model
+import Song from "../models/songModel.js";
 
 const getRecommendations = async (req, res) => {
-    try {
+      try {
         const songs = await Song.find({ user: req.user._id });
 
-        const genreList = songs.map((song) => ({ genre: song.genre }));
+        const genrePayload = songs.map((song) => ({
+          genre: song.genre,
+        }));
 
-        const response = await axios.post("http://localhost:8000/recommend/", {
-            songs: genreList,
-        });
+        const mlResponse = await axios.post(
+          "http://localhost:8000/recommend/",
+          {
+            songs: genrePayload,
+          }
+        );
 
-        res.json(response.data); // { recommended_genres: [...] }
-    } catch (err) {
-        console.error("Error getting recommendations:", err.message);
-        res.status(500).json({ error: "Failed to fetch recommendations" });
-    }
+        res.json(mlResponse.data); 
+      } catch (error) {
+        console.error("Recommendation error:", error.message);
+        res.status(500).json({ error: "Failed to get recommendations" });
+      }
+    
 };
 
 export { getRecommendations };
