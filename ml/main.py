@@ -54,9 +54,12 @@ async def classify_genre(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
 
 
-class PreferenceRequest(BaseModel):
-    preferences: list  # e.g., [0.2, 0.4, 0.1, 0.1, 0.2]
+class Song(BaseModel):
+    genre: str  # The genre of the song as a string
 
+
+class PreferenceRequest(BaseModel):
+    songs: list[Song]  # List of Song objects containing the genre property
 
 @app.post("/recommend/")
 def get_recommendations(req: PreferenceRequest):
